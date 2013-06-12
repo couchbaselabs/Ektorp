@@ -13,6 +13,7 @@ import org.ektorp.changes.DocumentChange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import android.os.AsyncTask;
 import android.widget.BaseAdapter;
 
 /**
@@ -109,12 +110,13 @@ public abstract class CouchbaseViewListAdapter extends BaseAdapter {
 								.build();
 
 						couchChangesAsyncTask = new CouchbaseListChangesAsyncTask(couchDbConnector, changesCmd);
-						couchChangesAsyncTask.execute();
+						couchChangesAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null);
+
 					}
 
 					if(lastUpdateChangesFeed > lastUpdateView) {
 						if (LOG.isDebugEnabled()) {
-				            LOG.debug("Finished, but still behind " + lastUpdateChangesFeed + " > " + lastUpdateView);
+                            LOG.debug("Finished, but still behind " + lastUpdateChangesFeed + " > " + lastUpdateView);
 						}
 						updateListItems();
 					}
@@ -129,7 +131,8 @@ public abstract class CouchbaseViewListAdapter extends BaseAdapter {
 
 			};
 
-			updateListItemsTask.execute();
+			updateListItemsTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null);
+
 		}
 	}
 
