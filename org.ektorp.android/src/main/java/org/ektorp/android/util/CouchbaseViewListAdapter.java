@@ -3,6 +3,7 @@ package org.ektorp.android.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.os.Build;
 import org.ektorp.CouchDbConnector;
 import org.ektorp.DbAccessException;
 import org.ektorp.ViewQuery;
@@ -110,7 +111,7 @@ public abstract class CouchbaseViewListAdapter extends BaseAdapter {
 								.build();
 
 						couchChangesAsyncTask = new CouchbaseListChangesAsyncTask(couchDbConnector, changesCmd);
-						couchChangesAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null);
+                        executeTask(couchChangesAsyncTask);
 
 					}
 
@@ -131,7 +132,7 @@ public abstract class CouchbaseViewListAdapter extends BaseAdapter {
 
 			};
 
-			updateListItemsTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null);
+            executeTask(updateListItemsTask);
 
 		}
 	}
@@ -172,5 +173,13 @@ public abstract class CouchbaseViewListAdapter extends BaseAdapter {
 			couchChangesAsyncTask.cancel(true);
 		}
 	}
+
+    private void executeTask(AsyncTask<Void, ?, ?> asyncTask) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null);
+        } else {
+            asyncTask.execute();
+        }
+    }
 
 }
