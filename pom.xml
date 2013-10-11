@@ -4,7 +4,7 @@
 	<artifactId>org.ektorp.parent</artifactId>
 	<packaging>pom</packaging>
 	<name>Ektorp Parent</name>
-	<version>1.2.2</version>
+	<version>1.2.4</version>
 	<description>a Java CouchDB persistence library</description>
 	<scm>
 		<connection>scm:git:git@github.com:helun/Ektorp.git</connection>
@@ -34,7 +34,6 @@
 	</developers>
 	<modules>
 		<module>org.ektorp</module>
-		<module>org.ektorp.spring</module>
 		<module>org.ektorp.android</module>
 	</modules>
 
@@ -146,10 +145,11 @@
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
 		<repository>
-			<id>sonatype-nexus-staging</id>
-			<name>Nexus Release Repository</name>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+			<id>deployment</id>
+			<name>Couchbase Nexus Repository</name>
+			<url>http://maven.hq.couchbase.com/nexus/content/repositories/releases/</url>
 		</repository>
+
 	</distributionManagement>
 	<profiles>
 		<profile>
